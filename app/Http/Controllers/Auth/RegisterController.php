@@ -41,7 +41,6 @@ class RegisterController extends Controller
             'status' => 'Active',
         ]);
 
-        Auth::login($user);
-        return redirect()->route('dashboard')->with('success', 'Account created successfully!');
+        return redirect()->route('login')->with('success', 'Account created successfully! Please sign in to continue.');
     }
 }

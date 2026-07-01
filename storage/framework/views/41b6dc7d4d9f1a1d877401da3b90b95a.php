@@ -1,8 +1,8 @@
-@extends('layout.auth')
 
-@section('title', 'Login')
 
-@section('content')
+<?php $__env->startSection('title', 'Login'); ?>
+
+<?php $__env->startSection('content'); ?>
 <div class="mx-auto w-full max-w-7xl">
     <div class="grid gap-8 lg:grid-cols-[1.25fr_0.95fr] items-center">
         <section class="relative overflow-hidden rounded-[2rem] bg-slate-950 px-8 py-10 text-slate-100 shadow-2xl shadow-slate-900/20 sm:px-12 sm:py-14">
@@ -65,33 +65,33 @@
                 </div>
             </div>
 
-            @if (session('success'))
+            <?php if(session('success')): ?>
                 <div class="mb-6 rounded-3xl border border-sky-100 bg-sky-50 p-4 text-sm text-sky-700">
                     <div class="font-semibold">Success</div>
-                    <p class="mt-1">{{ session('success') }}</p>
+                    <p class="mt-1"><?php echo e(session('success')); ?></p>
                 </div>
-            @endif
+            <?php endif; ?>
 
-            @if ($errors->any())
+            <?php if($errors->any()): ?>
                 <div class="mb-6 rounded-3xl border border-red-100 bg-red-50 p-4 text-sm text-red-700">
                     <div class="font-semibold">There was a problem with your login.</div>
                     <ul class="mt-2 list-disc space-y-1 pl-5">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
+                        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <li><?php echo e($error); ?></li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
                 </div>
-            @endif
+            <?php endif; ?>
 
-            <form action="{{ route('login.post') }}" method="POST" class="space-y-5">
-                @csrf
+            <form action="<?php echo e(route('login.post')); ?>" method="POST" class="space-y-5">
+                <?php echo csrf_field(); ?>
 
                 <div class="group relative">
                     <input
                         id="email"
                         type="email"
                         name="email"
-                        value="{{ old('email') }}"
+                        value="<?php echo e(old('email')); ?>"
                         required
                         autofocus
                         placeholder=" "
@@ -101,7 +101,14 @@
                         Email address
                     </label>
                 </div>
-                @error('email')<p class="text-sm text-red-600">{{ $message }}</p>@enderror
+                <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?><p class="text-sm text-red-600"><?php echo e($message); ?></p><?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
 
                 <div class="group relative">
                     <input
@@ -122,7 +129,14 @@
                         </svg>
                     </button>
                 </div>
-                @error('password')<p class="text-sm text-red-600">{{ $message }}</p>@enderror
+                <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?><p class="text-sm text-red-600"><?php echo e($message); ?></p><?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
 
                 <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <label class="inline-flex items-center gap-2 text-sm text-slate-600">
@@ -130,11 +144,11 @@
                         Remember me
                     </label>
 
-                    @if (Route::has('password.request'))
-                        <a href="{{ route('password.request') }}" class="text-sm font-semibold text-slate-700 transition hover:text-sky-600">Forgot password?</a>
-                    @else
+                    <?php if(Route::has('password.request')): ?>
+                        <a href="<?php echo e(route('password.request')); ?>" class="text-sm font-semibold text-slate-700 transition hover:text-sky-600">Forgot password?</a>
+                    <?php else: ?>
                         <span class="text-sm font-semibold text-slate-400">Forgot password?</span>
-                    @endif
+                    <?php endif; ?>
                 </div>
 
                 <button type="submit" class="inline-flex h-14 w-full items-center justify-center rounded-3xl bg-gradient-to-r from-sky-600 to-violet-600 px-6 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:-translate-y-0.5 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500/40">
@@ -143,14 +157,14 @@
             </form>
 
             <p class="mt-6 text-center text-sm text-slate-500">
-                New here? <a href="{{ route('register') }}" class="font-semibold text-slate-900 transition hover:text-sky-600">Create an account</a>
+                New here? <a href="<?php echo e(route('register')); ?>" class="font-semibold text-slate-900 transition hover:text-sky-600">Create an account</a>
             </p>
         </section>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const toggleBtn = document.getElementById('togglePassword');
@@ -165,4 +179,6 @@
         });
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layout.auth', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\xampp\htdocs\SMS\resources\views/auth/login.blade.php ENDPATH**/ ?>

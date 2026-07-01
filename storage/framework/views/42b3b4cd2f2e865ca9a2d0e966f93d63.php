@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') - School Management System</title>
+    <title><?php echo $__env->yieldContent('title'); ?> - School Management System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
@@ -713,7 +713,7 @@
             }
         }
     </style>
-    @yield('styles')
+    <?php echo $__env->yieldContent('styles'); ?>
 </head>
 <body>
     <div class="app-shell">
@@ -734,40 +734,40 @@
 
                 <nav>
                     <div class="menu-item">
-                        <a href="{{ route('dashboard') }}" class="menu-link @if(request()->route()->getName() === 'dashboard') active @endif">
+                        <a href="<?php echo e(route('dashboard')); ?>" class="menu-link <?php if(request()->route()->getName() === 'dashboard'): ?> active <?php endif; ?>">
                             <span class="menu-icon"><i class="bi bi-speedometer2"></i></span>
                             <span class="menu-label">Dashboard</span>
                         </a>
                     </div>
 
                     <div class="menu-item">
-                        <a href="{{ route('students.index') }}" class="menu-link @if(str_contains(request()->route()->getName(), 'students')) active @endif">
+                        <a href="<?php echo e(route('students.index')); ?>" class="menu-link <?php if(str_contains(request()->route()->getName(), 'students')): ?> active <?php endif; ?>">
                             <span class="menu-icon"><i class="bi bi-people-fill"></i></span>
                             <span class="menu-label">Students</span>
                         </a>
                     </div>
 
                     <div class="menu-item">
-                        <a href="{{ route('teachers.index') }}" class="menu-link @if(str_contains(request()->route()->getName(), 'teachers')) active @endif">
+                        <a href="<?php echo e(route('teachers.index')); ?>" class="menu-link <?php if(str_contains(request()->route()->getName(), 'teachers')): ?> active <?php endif; ?>">
                             <span class="menu-icon"><i class="bi bi-person-badge-fill"></i></span>
                             <span class="menu-label">Teachers</span>
                         </a>
                     </div>
 
-                    <div class="menu-group @if(str_contains(request()->route()->getName(), 'courses') || str_contains(request()->route()->getName(), 'timetable')) open @endif">
-                        <button type="button" class="submenu-toggle @if(str_contains(request()->route()->getName(), 'courses') || str_contains(request()->route()->getName(), 'timetable')) active @endif">
+                    <div class="menu-group <?php if(str_contains(request()->route()->getName(), 'courses') || str_contains(request()->route()->getName(), 'timetable')): ?> open <?php endif; ?>">
+                        <button type="button" class="submenu-toggle <?php if(str_contains(request()->route()->getName(), 'courses') || str_contains(request()->route()->getName(), 'timetable')): ?> active <?php endif; ?>">
                             <span class="menu-icon"><i class="bi bi-journal-bookmark-fill"></i></span>
                             <span class="menu-label">Academics</span>
                             <span class="submenu-icon ms-auto"><i class="bi bi-chevron-down"></i></span>
                         </button>
                         <ul class="submenu-list">
-                            <li><a href="{{ route('courses.index') }}" class="submenu-link @if(str_contains(request()->route()->getName(), 'courses')) active @endif">Courses</a></li>
-                            <li><a href="{{ route('timetable.index') }}" class="submenu-link @if(str_contains(request()->route()->getName(), 'timetable')) active @endif">Timetable</a></li>
+                            <li><a href="<?php echo e(route('courses.index')); ?>" class="submenu-link <?php if(str_contains(request()->route()->getName(), 'courses')): ?> active <?php endif; ?>">Courses</a></li>
+                            <li><a href="<?php echo e(route('timetable.index')); ?>" class="submenu-link <?php if(str_contains(request()->route()->getName(), 'timetable')): ?> active <?php endif; ?>">Timetable</a></li>
                         </ul>
                     </div>
 
                     <div class="menu-item">
-                        <a href="{{ route('fees.index') }}" class="menu-link @if(str_contains(request()->route()->getName(), 'fees')) active @endif">
+                        <a href="<?php echo e(route('fees.index')); ?>" class="menu-link <?php if(str_contains(request()->route()->getName(), 'fees')): ?> active <?php endif; ?>">
                             <span class="menu-icon"><i class="bi bi-currency-dollar"></i></span>
                             <span class="menu-label">Fees</span>
                         </a>
@@ -785,7 +785,7 @@
                     <div class="breadcrumbs">
                         <span><i class="bi bi-house-door-fill"></i> Home</span>
                         <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 4.5L10 8L6 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        <span>@yield('page-title', 'Dashboard')</span>
+                        <span><?php echo $__env->yieldContent('page-title', 'Dashboard'); ?></span>
                     </div>
                 </div>
 
@@ -832,17 +832,17 @@
                         <button class="profile-dropdown-toggle" type="button" aria-label="Open profile menu">
                             <div class="profile-avatar-small bg-sky-100 text-sky-700"><i class="bi bi-person-fill"></i></div>
                             <div>
-                                <div class="fw-semibold">{{ Auth::user()->name ?? 'Admin User' }}</div>
-                                <div class="text-muted" style="font-size: 0.85rem;">{{ Auth::user()->email ?? 'admin@example.com' }}</div>
+                                <div class="fw-semibold"><?php echo e(Auth::user()->name ?? 'Admin User'); ?></div>
+                                <div class="text-muted" style="font-size: 0.85rem;"><?php echo e(Auth::user()->email ?? 'admin@example.com'); ?></div>
                             </div>
                             <i class="bi bi-chevron-down ms-auto"></i>
                         </button>
                         <div class="profile-dropdown-menu">
-                            <a href="{{ route('profile.show') }}"><i class="bi bi-person"></i> My profile</a>
-                            <a href="{{ route('profile.edit') }}"><i class="bi bi-pencil"></i> Settings</a>
+                            <a href="<?php echo e(route('profile.show')); ?>"><i class="bi bi-person"></i> My profile</a>
+                            <a href="<?php echo e(route('profile.edit')); ?>"><i class="bi bi-pencil"></i> Settings</a>
                             <div class="dropdown-divider"></div>
-                            <form action="{{ route('logout') }}" method="POST">
-                                @csrf
+                            <form action="<?php echo e(route('logout')); ?>" method="POST">
+                                <?php echo csrf_field(); ?>
                                 <button type="submit" class="w-100 text-start bg-transparent"><i class="bi bi-box-arrow-right"></i> Logout</button>
                             </form>
                         </div>
@@ -853,41 +853,43 @@
             <main class="content-area">
                 <div class="page-title">
                     <div>
-                        <h1>@yield('page-title', 'Dashboard')</h1>
+                        <h1><?php echo $__env->yieldContent('page-title', 'Dashboard'); ?></h1>
                         <p class="page-subtitle">Professional school management in a modern dashboard.</p>
                     </div>
                 </div>
 
-                @if ($errors->any())
+                <?php if($errors->any()): ?>
                     <div class="alert alert-danger">
                         <h5>Please check the errors:</h5>
                         <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
+                            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <li><?php echo e($error); ?></li>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </ul>
                     </div>
-                @endif
+                <?php endif; ?>
 
-                @if (session('success'))
+                <?php if(session('success')): ?>
                     <div class="alert alert-success alert-dismissible fade show rounded-4" role="alert">
-                        <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
+                        <i class="bi bi-check-circle-fill me-2"></i> <?php echo e(session('success')); ?>
+
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                @endif
+                <?php endif; ?>
 
-                @if (session('error'))
+                <?php if(session('error')): ?>
                     <div class="alert alert-danger alert-dismissible fade show rounded-4" role="alert">
-                        <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('error') }}
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i> <?php echo e(session('error')); ?>
+
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                @endif
+                <?php endif; ?>
 
-                @yield('content')
+                <?php echo $__env->yieldContent('content'); ?>
             </main>
 
             <footer class="app-footer">
-                © {{ date('Y') }} School Management System. Built for modern campuses and efficient teams.
+                © <?php echo e(date('Y')); ?> School Management System. Built for modern campuses and efficient teams.
             </footer>
         </div>
     </div>
@@ -986,6 +988,6 @@
             applySavedTheme();
         });
     </script>
-    @yield('scripts')
+    <?php echo $__env->yieldContent('scripts'); ?>
 </body>
-</html>
+</html><?php /**PATH D:\xampp\htdocs\SMS\resources\views/layout/app.blade.php ENDPATH**/ ?>

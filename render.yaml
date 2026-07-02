@@ -1,0 +1,96 @@
+# render.yaml - Render deployment configuration
+# This file configures how the Laravel School Management System 
+# will be deployed on Render's infrastructure
+
+services:
+  - type: web
+    name: sms-laravel-app
+    
+    # Docker configuration
+    dockerfilePath: ./Dockerfile
+    dockerfile: Dockerfile
+    
+    # Runtime configuration
+    runtime: docker
+    
+    # Region (adjust as needed for your location)
+    region: oregon
+    
+    # Scaling configuration
+    scaling:
+      min_instances: 1
+      max_instances: 3
+    
+    # Health check configuration
+    healthCheckPath: /health.php
+    healthCheckInterval: 30
+    healthCheckTimeout: 10
+    
+    # Environment variables - MUST be set in Render dashboard
+    envVars:
+      # Laravel environment
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: LOG_CHANNEL
+        value: single
+      - key: LOG_LEVEL
+        value: warning
+      
+      # Queue and cache configuration
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: SESSION_DRIVER
+        value: database
+      
+      # Database configuration (SQLite - included in container)
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: DB_DATABASE
+        value: database/database.sqlite
+      
+      # Filesystem configuration
+      - key: FILESYSTEM_DISK
+        value: local
+      
+      # Mail configuration (using log driver for development)
+      - key: MAIL_MAILER
+        value: log
+      
+      # Vite configuration
+      - key: VITE_APP_NAME
+        value: "School Management System"
+    
+    # Secrets - MUST be configured in Render dashboard
+    # These will be passed as environment variables from Render's secret management
+    secrets:
+      - APP_KEY        # Generate with: php artisan key:generate
+      - APP_URL        # Set to your Render app URL once deployed
+
+# Environment setup instructions:
+# 
+# Required environment variables to set in Render dashboard:
+# 
+# 1. APP_KEY - Run locally and get from .env, or generate with:
+#    php artisan key:generate --show
+#
+# 2. APP_URL - Will be your Render deployment URL (e.g., https://app-name.onrender.com)
+#    Set this AFTER your first successful deployment
+#
+# Optional but recommended:
+# - BCRYPT_ROUNDS=12 (already optimized in .env.example)
+# - LOG_LEVEL=warning (set in envVars above)
+# - TRUSTED_PROXIES=* (for Render's load balancer)
+#
+# Post-deployment:
+# After successful deployment, Render will automatically:
+# 1. Run migrations (php artisan migrate --force)
+# 2. Cache configuration (php artisan config:cache)
+# 3. Cache routes (php artisan route:cache)
+# 4. Cache views (php artisan view:cache)
+# 5. Create storage symlink (php artisan storage:link --force)
+#
+# The application will be accessible at: https://your-app-name.onrender.com

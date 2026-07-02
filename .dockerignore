@@ -1,0 +1,77 @@
+# Docker ignore file - prevents unnecessary files from being copied into Docker image
+
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# IDE and editor files
+.vscode
+.idea
+.DS_Store
+*.swp
+*.swo
+*~
+.project
+.c9/
+
+# Node/Frontend dependencies (will be reinstalled during build)
+node_modules
+npm-debug.log*
+yarn-error.log*
+.npm/
+.yarn/
+
+# PHP dependencies (will be reinstalled during build)
+vendor/
+composer.lock
+
+# Laravel specific
+.env
+.env.*.php
+storage/logs/*
+!storage/logs/.gitkeep
+bootstrap/cache/*
+!bootstrap/cache/.gitkeep
+storage/framework/cache/data/*
+!storage/framework/cache/data/.gitkeep
+storage/framework/sessions/*
+!storage/framework/sessions/.gitkeep
+storage/framework/views/*
+!storage/framework/views/.gitkeep
+
+# Build artifacts
+dist/
+build/
+public/build/
+public/hot/
+
+# Testing
+tests/
+phpunit.xml
+phpunit.xml.dist
+.phpunit.result.cache
+coverage/
+
+# Documentation
+docs/
+README.md
+LICENSE
+CHANGELOG.md
+
+# Development files
+Dockerfile.dev
+docker-compose.dev.yml
+.editorconfig
+
+# OS files
+Thumbs.db
+.DS_Store
+*.exe
+*.dll
+
+# Misc
+*.log
+.cache/
+.tmp/
+temp/
